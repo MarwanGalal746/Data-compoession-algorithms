@@ -33,5 +33,9 @@ public class Main {
             freq.add(x);
         }
         Huffman.compress(arr,freq);*/
+
+
+        //BinaryArithmeticCoding
+        //System.out.println(BinaryArithmeticCoding.compress());
     }
 }

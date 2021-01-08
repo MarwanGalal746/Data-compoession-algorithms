@@ -30,6 +30,8 @@ public class FloatArithmeticCoding {
         }
         return ranges;
     }
+
+
     public static double compress(String str) {
         if (str.length() == 0) {
             return 0;
