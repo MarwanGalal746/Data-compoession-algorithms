@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
@@ -36,6 +38,24 @@ public class Main {
 
 
         //BinaryArithmeticCoding
-        //System.out.println(BinaryArithmeticCoding.compress());
+        /*Map<Character,ArrayList<Double>> m = new HashMap<>();
+        ArrayList<Double>a1=new ArrayList<>();
+        a1.add(0.0);
+        a1.add(0.8);
+        m.put('A',a1);
+        ArrayList<Double>a2=new ArrayList<>();
+        a2.add(0.8);
+        a2.add(0.82);
+        m.put('B',a2);
+        ArrayList<Double>a3=new ArrayList<>();
+        a3.add(0.82);
+        a3.add(1.00);
+        m.put('C',a3);
+
+        //0.110001100000
+        String floatCode =BinaryArithmeticCoding.compress("ACBA",m);
+        System.out.println(floatCode);
+        //ACBA
+        System.out.println(BinaryArithmeticCoding.decompress(floatCode,4,m));*/
     }
 }

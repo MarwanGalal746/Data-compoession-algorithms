@@ -54,12 +54,12 @@ public class BinaryArithmeticCoding {
         return Min;
     }
 
-    public static String compress(String str) {
+    public static String compress(String str, Map<Character, ArrayList<Double>> ranges) {
         if (str.length() == 0) {
             return "";
         }
-        Map<Character, ArrayList<Double>> ranges = generateRanges(str);
         StringBuilder res = new StringBuilder();
+        res.append("0.");
         double low_range, high_range, x;
         double low_range_curr, high_range_curr;
         char ch;
@@ -97,7 +97,10 @@ public class BinaryArithmeticCoding {
             }
         }
         res.append('1');
-        double leastProb = getLeastProb(str);
+        ArrayList<Double> probabilities = new ArrayList<>();
+        for (Map.Entry<Character, ArrayList<Double>> entry : ranges.entrySet())
+            probabilities.add(entry.getValue().get(1) - entry.getValue().get(0));
+        double leastProb = Collections.min(probabilities);
         int k = 0;
         while (Math.pow(.5, k) > leastProb) k++;
         k--;
@@ -128,15 +131,87 @@ public class BinaryArithmeticCoding {
     }
 
 
-    public static String decompress(String code, ArrayList<Double> probabilities) {
+    public static String decompress(String code, int len, Map<Character, ArrayList<Double>> ranges) {
         String res = "";
+        ArrayList<Double> probabilities = new ArrayList<>();
+        for (Map.Entry<Character, ArrayList<Double>> entry : ranges.entrySet())
+            probabilities.add(entry.getValue().get(1) - entry.getValue().get(0));
         double leastProb = Collections.min(probabilities);
-        int k=0;
+        int k = 0;
         while (Math.pow(.5, k) > leastProb) k++;
-
+        String bin = "";
+        for (int i = 0; i < k; i++) bin += code.charAt(i);
+        double floatCode = binaryToDecimal(bin.toString(), bin.length());
+        double low_range = 0, high_range = 0, temp, tempM, x, y, range;
+        double low_rangeSym, high_rangeSym;
+        int ind = 0;
+        for (char ch : ranges.keySet()) {
+            if (floatCode > ranges.get(ch).get(0) && floatCode < ranges.get(ch).get(1)) {
+                res += ch;
+                low_range = ranges.get(ch).get(0);
+                high_range = ranges.get(ch).get(1);
+                break;
+            }
+        }
+        while (true) {
+            if ((low_range < 0.5 && high_range < 0.5)) {
+                low_range *= 2;
+                high_range *= 2;
+                ind++;
+                continue;
+            }
+            if (low_range > 0.5 && high_range > 0.5) {
+                low_range -= 0.5;
+                low_range *= 2;
+                high_range -= 0.5;
+                high_range *= 2;
+                ind++;
+                continue;
+            }
+            break;
+        }
+        for (int r = 1; r < len; r++) {
+            bin = "0.";
+            for (int i = 2 + ind; i < k + ind + 2; i++) bin += code.charAt(i);
+            floatCode = binaryToDecimal(bin.toString(), bin.length());
+            floatCode = (floatCode - low_range) / (high_range - low_range);
+            for (char ch : ranges.keySet()) {
+                if (floatCode > ranges.get(ch).get(0) && floatCode < ranges.get(ch).get(1)) {
+                    res += ch;
+                    low_rangeSym = ranges.get(ch).get(0);
+                    high_rangeSym = ranges.get(ch).get(1);
+                    temp = low_range;
+                    range = high_range - low_range;
+                    tempM = range * low_rangeSym;
+                    low_range += tempM;
+                    tempM = range * high_rangeSym;
+                    high_range = temp + tempM;
+                    break;
+                }
+            }
+            while (true) {
+                if ((low_range < 0.5 && high_range < 0.5)) {
+                    low_range *= 2;
+                    high_range *= 2;
+                    ind++;
+                    continue;
+                }
+                if (low_range > 0.5 && high_range > 0.5) {
+                    low_range -= 0.5;
+                    low_range *= 2;
+                    high_range -= 0.5;
+                    high_range *= 2;
+                    ind++;
+                    continue;
+                }
+                break;
+            }
+        }
         return res;
     }
 
+
+    //test compress
     /*public static String compress() {
         String str="ACBA";
         Map<Character, ArrayList<Double>> ranges = new HashMap<Character, ArrayList<Double>>();
