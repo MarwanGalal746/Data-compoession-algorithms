@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -5,7 +6,9 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+
+
 
         //FloatArithmeticCoding
         //AAABBCAAAAAAA
@@ -17,6 +20,10 @@ public class Main {
         System.out.print("decompressed string:   ");
         System.out.println(FloatArithmeticCoding.deCompress(val, str.length(),
          FloatArithmeticCoding.generateRanges(str)));*/
+
+
+
+
 
 
         //Huffman
@@ -37,6 +44,10 @@ public class Main {
         Huffman.compress(arr,freq);*/
 
 
+
+
+
+
         //BinaryArithmeticCoding
         /*Map<Character,ArrayList<Double>> m = new HashMap<>();
         ArrayList<Double>a1=new ArrayList<>();
@@ -51,11 +62,24 @@ public class Main {
         a3.add(0.82);
         a3.add(1.00);
         m.put('C',a3);
-
         //0.110001100000
         String floatCode =BinaryArithmeticCoding.compress("ACBA",m);
         System.out.println(floatCode);
         //ACBA
         System.out.println(BinaryArithmeticCoding.decompress(floatCode,4,m));*/
+
+
+
+
+
+
+        //vector quantization
+        /*int numOfVectors = (img.h * img.w)/(16);
+        int codeBlockSize = 32*4*4*5;
+        if(  VectorQuantization.Compress(4,4,codeBlockSize,"/home/marwan/Desktop/photo2.jpg/"))
+            System.out.println("photo is compressed");
+        String photo = VectorQuantization.getCompressedPath("/home/marwan/Desktop/photo2.jpg/");
+        if( VectorQuantization.Decompress(photo))
+            System.out.println("photo is decompressed");*/
     }
 }

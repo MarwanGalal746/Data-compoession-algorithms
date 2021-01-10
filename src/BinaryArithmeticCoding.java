@@ -4,34 +4,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class BinaryArithmeticCoding {
-    public static Map<Character, ArrayList<Double>> generateRanges(String str) {
-        //to sore high range and low range for each character
-        Map<Character, ArrayList<Double>> ranges = new HashMap<Character, ArrayList<Double>>();
-
-        //to store only one copy for each character in the string
-        Set<Character> uniqueChars = new LinkedHashSet<Character>();
-
-        //convert the string to arr to sort it
-        char[] arr = str.toCharArray();
-        Arrays.sort(arr);
-
-        //add character to the set
-        for (int i = 0; i < str.length(); i++)
-            uniqueChars.add(arr[i]);
-
-        //add range of each character to the map
-        double low = 0, high, count;
-        for (char info : uniqueChars) {
-            count = str.chars().filter(c -> c == info).count();
-            high = (count / str.length()) + low;
-            ArrayList<Double> pair = new ArrayList<>();
-            pair.add(low);
-            pair.add(high);
-            ranges.put(info, pair);
-            low = high;
-        }
-        return ranges;
-    }
 
     private static double getLeastProb(String str) {
         double Min = 123452267.0;
